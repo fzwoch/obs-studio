@@ -104,6 +104,7 @@ void video_frame_init(struct video_frame *frame, enum video_format format,
 		break;
 
 	case VIDEO_FORMAT_BGR3:
+	case VIDEO_FORMAT_RGB3:
 		size = width * height * 3;
 		ALIGN_SIZE(size, alignment);
 		frame->data[0] = bmalloc(size);
@@ -221,6 +222,7 @@ void video_frame_copy(struct video_frame *dst, const struct video_frame *src,
 	case VIDEO_FORMAT_BGRA:
 	case VIDEO_FORMAT_BGRX:
 	case VIDEO_FORMAT_BGR3:
+	case VIDEO_FORMAT_RGB3:
 	case VIDEO_FORMAT_AYUV:
 		memcpy(dst->data[0], src->data[0], src->linesize[0] * cy);
 		break;

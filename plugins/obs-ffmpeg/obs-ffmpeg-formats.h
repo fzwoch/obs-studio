@@ -31,6 +31,8 @@ obs_to_ffmpeg_video_format(enum video_format format)
 		return AV_PIX_FMT_GRAY8;
 	case VIDEO_FORMAT_BGR3:
 		return AV_PIX_FMT_BGR24;
+	case VIDEO_FORMAT_RGB3:
+		return AV_PIX_FMT_RGB24;
 	case VIDEO_FORMAT_I422:
 		return AV_PIX_FMT_YUV422P;
 	case VIDEO_FORMAT_I40A:
@@ -71,6 +73,8 @@ ffmpeg_to_obs_video_format(enum AVPixelFormat format)
 		return VIDEO_FORMAT_Y800;
 	case AV_PIX_FMT_BGR24:
 		return VIDEO_FORMAT_BGR3;
+	case AV_PIX_FMT_RGB24:
+		return VIDEO_FORMAT_RGB3;
 	case AV_PIX_FMT_YUV422P:
 		return VIDEO_FORMAT_I422;
 	case AV_PIX_FMT_YUVA420P:

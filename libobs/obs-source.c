@@ -1426,6 +1426,7 @@ static inline enum convert_type get_convert_type(enum video_format format,
 		return full_range ? CONVERT_NONE : CONVERT_RGB_LIMITED;
 
 	case VIDEO_FORMAT_BGR3:
+	case VIDEO_FORMAT_RGB3:
 		return CONVERT_BGR3;
 
 	case VIDEO_FORMAT_I40A:
@@ -1778,6 +1779,9 @@ static const char *select_conversion_technique(enum video_format format,
 
 	case VIDEO_FORMAT_BGR3:
 		return full_range ? "BGR3_Full" : "BGR3_Limited";
+
+	case VIDEO_FORMAT_RGB3:
+		return full_range ? "RGB3_Full" : "RGB3_Limited";
 
 	case VIDEO_FORMAT_I422:
 		return "I422_Reverse";
@@ -2582,6 +2586,7 @@ static void copy_frame_data(struct obs_source_frame *dst,
 	case VIDEO_FORMAT_BGRX:
 	case VIDEO_FORMAT_Y800:
 	case VIDEO_FORMAT_BGR3:
+	case VIDEO_FORMAT_RGB3:
 	case VIDEO_FORMAT_AYUV:
 		copy_frame_data_plane(dst, src, 0, dst->height);
 		break;

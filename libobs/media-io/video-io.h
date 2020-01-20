@@ -53,6 +53,7 @@ enum video_format {
 
 	/* more packed uncompressed formats */
 	VIDEO_FORMAT_BGR3,
+	VIDEO_FORMAT_RGB3,
 
 	/* planar 4:2:2 */
 	VIDEO_FORMAT_I422,
@@ -123,6 +124,7 @@ static inline bool format_is_yuv(enum video_format format)
 	case VIDEO_FORMAT_BGRX:
 	case VIDEO_FORMAT_Y800:
 	case VIDEO_FORMAT_BGR3:
+	case VIDEO_FORMAT_RGB3:
 		return false;
 	}
 
@@ -156,6 +158,8 @@ static inline const char *get_video_format_name(enum video_format format)
 		return "Y800";
 	case VIDEO_FORMAT_BGR3:
 		return "BGR3";
+	case VIDEO_FORMAT_RGB3:
+		return "RGB3";
 	case VIDEO_FORMAT_I40A:
 		return "I40A";
 	case VIDEO_FORMAT_I42A:
