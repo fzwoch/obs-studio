@@ -3286,15 +3286,29 @@ void OBSApp::commitData(QSessionManager &manager)
 int main(int argc, char *argv[])
 {
 #ifndef _WIN32
-	signal(SIGPIPE, SIG_IGN);
+	stack_t ss;
+	ss.ss_sp = malloc(SIGSTKSZ); //leaking, idgaf
+	if (ss.ss_sp == NULL) {
+		fprintf(stderr, "ss_sp alloc failed\n");
+		exit(1);
+	}
+	ss.ss_size = SIGSTKSZ;
+	ss.ss_flags = 0;
+	if (sigaltstack(&ss, NULL) < 0) {
+		perror("sigaltstack");
+		exit(1);
+	}
 
 	struct sigaction sig_handler;
 
 	sig_handler.sa_handler = OBSApp::SigIntSignalHandler;
 	sigemptyset(&sig_handler.sa_mask);
-	sig_handler.sa_flags = 0;
+	sig_handler.sa_flags = SA_ONSTACK;
 
 	sigaction(SIGINT, &sig_handler, NULL);
+
+	sig_handler.sa_handler = SIG_IGN;
+	sigaction(SIGPIPE, &sig_handler, NULL);
 
 	/* Block SIGPIPE in all threads, this can happen if a thread calls write on
 	a closed pipe. */
